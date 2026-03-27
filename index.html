@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLACK SOLL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060606;
+      --surface:  #0e0e0e;
+      --border:   #1a1a1a;
+      --red:      #ff0033;
+      --dim:      #444;
+      --text:     #e8e8e8;
+      --muted:    #555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 56px;
+    }
+
+    /* ── LOGO MARK ── */
+    .logo-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+    }
+
+    .logo-nav .wordmark {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.22em;
+      color: var(--text);
+    }
+
+    .logo-nav .wordmark em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    /* ── VINYL MARK ── */
+    .vinyl-sm {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .vinyl-lg {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 3rem;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .vinyl-lg { animation: spin 12s linear infinite; }
+
+    /* legacy .logo for footer */
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10rem 3rem 8rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: clamp(3rem, 10vw, 8rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .section-header span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── DJ GRID ── */
+    .dj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .dj-card {
+      background: var(--bg);
+      padding: 2.5rem 2rem;
+      cursor: default;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .dj-card:hover { background: var(--surface); }
+
+    .dj-card:hover .dj-name { color: var(--red); }
+
+    .dj-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    .dj-name {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      transition: color 0.2s;
+    }
+
+    .dj-genre {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .dj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .dj-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .dj-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .dj-links a:hover { color: var(--red); }
+
+    /* ── CATALOG TABLE ── */
+    .catalog-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .catalog-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .catalog-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      text-align: left;
+      padding: 0 1rem 1rem 0;
+      font-weight: 400;
+    }
+
+    .catalog-table th:last-child { text-align: right; }
+
+    .catalog-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .catalog-table tbody tr:hover { background: var(--surface); }
+
+    .catalog-table tbody tr:hover .track-title { color: var(--red); }
+
+    .catalog-table td {
+      padding: 1.4rem 1rem 1.4rem 0;
+      vertical-align: middle;
+    }
+
+    .catalog-table td:last-child {
+      text-align: right;
+      padding-right: 0;
+    }
+
+    .track-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      width: 3rem;
+    }
+
+    .track-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--text);
+      transition: color 0.2s;
+    }
+
+    .track-artist {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .track-genre {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .track-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .track-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      letter-spacing: 0.08em;
+    }
+
+    .track-listen {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .catalog-table tbody tr:hover .track-listen { opacity: 1; }
+
+    .track-listen a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--red);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .track-listen a:hover { text-decoration: underline; }
+
+    /* ── DIVIDER LINE ── */
+    .full-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer .logo { font-size: 0.75rem; }
+
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.5rem; }
+      section { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+      .catalog-table .track-genre,
+      .catalog-table .track-year { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo-nav">
+      <svg class="vinyl-sm" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="13" r="12.5" fill="#060606" stroke="#e8e8e8" stroke-width="0.8"/>
+        <circle cx="13" cy="13" r="9.5"  stroke="#e8e8e8" stroke-width="0.4" opacity="0.35"/>
+        <circle cx="13" cy="13" r="6.5"  stroke="#e8e8e8" stroke-width="0.4" opacity="0.25"/>
+        <circle cx="13" cy="13" r="4"    fill="#0e0e0e" stroke="#e8e8e8" stroke-width="0.5"/>
+        <circle cx="13" cy="13" r="1.4"  fill="#ff0033"/>
+      </svg>
+      <span class="wordmark">SLACK<em>.</em>SOLL</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#djs">DJs</a></li>
+      <li><a href="#catalog">Catálogo</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <svg class="vinyl-lg" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="55" cy="55" r="54"   fill="#060606" stroke="#e8e8e8" stroke-width="0.8"/>
+      <circle cx="55" cy="55" r="48"   stroke="#e8e8e8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="55" cy="55" r="42"   stroke="#e8e8e8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="55" cy="55" r="36"   stroke="#e8e8e8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="55" cy="55" r="30"   stroke="#e8e8e8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="55" cy="55" r="24"   stroke="#e8e8e8" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="55" cy="55" r="17"   fill="#0e0e0e" stroke="#e8e8e8" stroke-width="0.7"/>
+      <circle cx="55" cy="55" r="5"    fill="#ff0033"/>
+    </svg>
+    <p class="hero-label">Sello Discográfico &mdash; Est. 2024</p>
+    <h1>SLACK<em>.</em>SOLL</h1>
+    <p class="hero-sub">Electronic &mdash; Techno &mdash; Underground</p>
+  </header>
+
+  <!-- DJS -->
+  <section id="djs">
+    <div class="section-header">
+      <h2>Artistas</h2>
+      <span>— 01 DJ</span>
+    </div>
+
+    <div class="dj-grid">
+
+      <div class="dj-card">
+        <p class="dj-number">001</p>
+        <p class="dj-name">UNDERFRANCO</p>
+        <p class="dj-genre">House / Tech House</p>
+        <div class="dj-tags">
+          <span class="tag">House</span>
+          <span class="tag">Tech House</span>
+        </div>
+        <div class="dj-links">
+          <a href="https://www.instagram.com/under.franco/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://soundcloud.com/under_franco" target="_blank" rel="noopener">SoundCloud</a>
+          <a href="https://youtu.be/zhg6Qe3MBtI" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="full-divider"></div>
+
+  <!-- CATALOG -->
+  <section id="catalog">
+    <div class="section-header">
+      <h2>Catálogo</h2>
+      <span>— 01 Lanzamiento</span>
+    </div>
+
+    <table class="catalog-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Título</th>
+          <th>Artista</th>
+          <th>Género</th>
+          <th>Año</th>
+          <th>Cat.</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td class="track-num">001</td>
+          <td class="track-title">Live Set 001</td>
+          <td class="track-artist">UNDERFRANCO</td>
+          <td class="track-genre">House / Tech House</td>
+          <td class="track-year">2025</td>
+          <td class="track-cat">SS001</td>
+          <td class="track-listen"><a href="https://www.youtube.com/watch?v=zhg6Qe3MBtI" target="_blank" rel="noopener">▶ Escuchar</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">SLACK<span>.</span>SOLL</a>
+    <p>&copy; 2026 Slack Soll &mdash; Todos los derechos reservados</p>
+  </footer>
+
+</body>
+</html>
