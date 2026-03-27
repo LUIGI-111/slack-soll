@@ -191,15 +191,16 @@
 
     /* ── DJ GRID ── */
     .dj-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 1px;
       background: var(--border);
     }
 
     .dj-card {
       background: var(--bg);
-      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 260px 1fr;
       cursor: default;
       transition: background 0.2s;
       position: relative;
@@ -208,6 +209,25 @@
     .dj-card:hover { background: var(--surface); }
 
     .dj-card:hover .dj-name { color: var(--red); }
+
+    .dj-info {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .dj-featured {
+      position: relative;
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+
+    .dj-featured iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      border: none;
+      display: block;
+    }
 
     .dj-number {
       font-family: 'Space Mono', monospace;
@@ -463,17 +483,27 @@
     <div class="dj-grid">
 
       <div class="dj-card">
-        <p class="dj-number">001</p>
-        <p class="dj-name">UNDERFRANCO</p>
-        <p class="dj-genre">House / Tech House</p>
-        <div class="dj-tags">
-          <span class="tag">House</span>
-          <span class="tag">Tech House</span>
+        <div class="dj-info">
+          <p class="dj-number">001</p>
+          <p class="dj-name">UNDERFRANCO</p>
+          <p class="dj-genre">House / Tech House</p>
+          <div class="dj-tags">
+            <span class="tag">House</span>
+            <span class="tag">Tech House</span>
+          </div>
+          <div class="dj-links">
+            <a href="https://www.instagram.com/under.franco/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://soundcloud.com/under_franco" target="_blank" rel="noopener">SoundCloud</a>
+            <a href="https://youtu.be/zhg6Qe3MBtI" target="_blank" rel="noopener">YouTube</a>
+          </div>
         </div>
-        <div class="dj-links">
-          <a href="https://www.instagram.com/under.franco/" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://soundcloud.com/under_franco" target="_blank" rel="noopener">SoundCloud</a>
-          <a href="https://youtu.be/zhg6Qe3MBtI" target="_blank" rel="noopener">YouTube</a>
+        <div class="dj-featured">
+          <iframe
+            src="https://www.youtube.com/embed/zhg6Qe3MBtI?start=1971"
+            title="UnderFranco Live Set"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
 
