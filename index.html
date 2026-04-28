@@ -478,25 +478,40 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.45);
+      filter: brightness(0.55);
       display: block;
+    }
+
+    .carousel-slide::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
     }
 
     .carousel-info {
       position: absolute;
-      bottom: 1.5rem;
+      bottom: 2rem;
       left: 1.5rem;
+      right: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.6rem;
+      z-index: 2;
     }
 
     .carousel-title {
       font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      color: var(--text);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      color: #ffffff;
       text-transform: uppercase;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9);
     }
 
     .carousel-info a {
@@ -692,7 +707,7 @@
               <div class="carousel-slide">
                 <img src="godz.02.jpg.png" alt="GODZ 3AM" />
                 <div class="carousel-info">
-                  <p class="carousel-title">3 AM</p>
+                  <p class="carousel-title">Give Me the Night</p>
                   <a href="https://soundcloud.com/diego-zabala-quintero/3-am" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
                 </div>
               </div>
