@@ -449,6 +449,89 @@
 
     .track-listen a:hover { text-decoration: underline; }
 
+    /* ── ACCORDION ── */
+    .dj-accordion {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .accordion-cover {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .accordion-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+      transition: filter 0.3s;
+    }
+
+    .accordion-cover:hover img { filter: brightness(0.65); }
+
+    .accordion-cover span {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.25rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+    }
+
+    .accordion-item {
+      border-top: 1px solid var(--border);
+    }
+
+    .accordion-item summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: color 0.2s;
+      user-select: none;
+    }
+
+    .accordion-item summary::-webkit-details-marker { display: none; }
+
+    .accordion-item summary:hover { color: var(--text); }
+
+    .accordion-item summary::after {
+      content: '+';
+      font-size: 1rem;
+      color: var(--dim);
+      transition: color 0.2s;
+    }
+
+    .accordion-item[open] > summary { color: var(--red); }
+    .accordion-item[open] > summary::after { content: '−'; color: var(--red); }
+
+    .accordion-body {
+      padding: 0 1.25rem 1.1rem;
+    }
+
+    .accordion-body a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      color: var(--red);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .accordion-body a:hover { text-decoration: underline; }
+
     /* ── DIVIDER LINE ── */
     .full-divider {
       width: 100%;
@@ -578,16 +661,23 @@
             <a href="https://soundcloud.com/diego-zabala-quintero" target="_blank" rel="noopener">SoundCloud</a>
           </div>
         </div>
-        <div class="dj-featured">
-          <a href="https://on.soundcloud.com/QbvGb7VS50nnLDyFCb" target="_blank" rel="noopener">
+        <div class="dj-featured dj-accordion">
+          <div class="accordion-cover">
             <img src="godz.jpg.png" alt="GODZ" />
-            <div class="play-btn">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="white">
-                <polygon points="5,3 18,10 5,17"/>
-              </svg>
+            <span>Sets</span>
+          </div>
+          <details class="accordion-item">
+            <summary>Live Set 002</summary>
+            <div class="accordion-body">
+              <a href="https://on.soundcloud.com/QbvGb7VS50nnLDyFCb" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
             </div>
-            <span class="set-label">Live Set 002 — Escuchar en SoundCloud</span>
-          </a>
+          </details>
+          <details class="accordion-item">
+            <summary>3 AM</summary>
+            <div class="accordion-body">
+              <a href="https://soundcloud.com/diego-zabala-quintero/3-am" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
+            </div>
+          </details>
         </div>
       </div>
 
