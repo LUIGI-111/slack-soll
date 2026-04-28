@@ -449,79 +449,57 @@
 
     .track-listen a:hover { text-decoration: underline; }
 
-    /* ── ACCORDION ── */
-    .dj-accordion {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .accordion-cover {
+    /* ── CAROUSEL ── */
+    .dj-carousel {
       position: relative;
-      height: 180px;
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
       overflow: hidden;
-      flex-shrink: 0;
     }
 
-    .accordion-cover img {
+    .carousel-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      scroll-snap-align: start;
+    }
+
+    .carousel-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.5);
-      transition: filter 0.3s;
+      filter: brightness(0.45);
+      display: block;
     }
 
-    .accordion-cover:hover img { filter: brightness(0.65); }
-
-    .accordion-cover span {
+    .carousel-info {
       position: absolute;
-      bottom: 1rem;
-      left: 1.25rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-    }
-
-    .accordion-item {
-      border-top: 1px solid var(--border);
-    }
-
-    .accordion-item summary {
-      list-style: none;
+      bottom: 1.5rem;
+      left: 1.5rem;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.25rem;
-      cursor: pointer;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .carousel-title {
       font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--text);
       text-transform: uppercase;
-      transition: color 0.2s;
-      user-select: none;
     }
 
-    .accordion-item summary::-webkit-details-marker { display: none; }
-
-    .accordion-item summary:hover { color: var(--text); }
-
-    .accordion-item summary::after {
-      content: '+';
-      font-size: 1rem;
-      color: var(--dim);
-      transition: color 0.2s;
-    }
-
-    .accordion-item[open] > summary { color: var(--red); }
-    .accordion-item[open] > summary::after { content: '−'; color: var(--red); }
-
-    .accordion-body {
-      padding: 0 1.25rem 1.1rem;
-    }
-
-    .accordion-body a {
+    .carousel-info a {
       font-family: 'Space Mono', monospace;
       font-size: 0.58rem;
       letter-spacing: 0.12em;
@@ -530,7 +508,47 @@
       text-transform: uppercase;
     }
 
-    .accordion-body a:hover { text-decoration: underline; }
+    .carousel-info a:hover { text-decoration: underline; }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 1.2rem;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      z-index: 2;
+    }
+
+    .carousel-btn:hover { border-color: var(--red); color: var(--red); }
+    .carousel-btn.prev { left: 0.75rem; }
+    .carousel-btn.next { right: 0.75rem; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .carousel-dots .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--dim);
+      transition: background 0.2s;
+    }
+
+    .carousel-dots .dot.active { background: var(--red); }
 
     /* ── DIVIDER LINE ── */
     .full-divider {
@@ -661,23 +679,31 @@
             <a href="https://soundcloud.com/diego-zabala-quintero" target="_blank" rel="noopener">SoundCloud</a>
           </div>
         </div>
-        <div class="dj-featured dj-accordion">
-          <div class="accordion-cover">
-            <img src="godz.jpg.png" alt="GODZ" />
-            <span>Sets</span>
+        <div class="dj-featured">
+          <div class="dj-carousel" id="carousel-godz">
+            <div class="carousel-slides">
+              <div class="carousel-slide">
+                <img src="godz.jpg.png" alt="GODZ" />
+                <div class="carousel-info">
+                  <p class="carousel-title">Live Set 002</p>
+                  <a href="https://on.soundcloud.com/QbvGb7VS50nnLDyFCb" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img src="godz.02.jpg.png" alt="GODZ 3AM" />
+                <div class="carousel-info">
+                  <p class="carousel-title">3 AM</p>
+                  <a href="https://soundcloud.com/diego-zabala-quintero/3-am" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-btn prev" onclick="moveCarousel('carousel-godz',-1)">&#8249;</button>
+            <button class="carousel-btn next" onclick="moveCarousel('carousel-godz', 1)">&#8250;</button>
+            <div class="carousel-dots">
+              <span class="dot active"></span>
+              <span class="dot"></span>
+            </div>
           </div>
-          <details class="accordion-item">
-            <summary>Live Set 002</summary>
-            <div class="accordion-body">
-              <a href="https://on.soundcloud.com/QbvGb7VS50nnLDyFCb" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
-            </div>
-          </details>
-          <details class="accordion-item">
-            <summary>3 AM</summary>
-            <div class="accordion-body">
-              <a href="https://soundcloud.com/diego-zabala-quintero/3-am" target="_blank" rel="noopener">▶ Escuchar en SoundCloud</a>
-            </div>
-          </details>
         </div>
       </div>
 
@@ -775,5 +801,18 @@
     <p>&copy; 2026 Slack Soll &mdash; Todos los derechos reservados</p>
   </footer>
 
+  <script>
+    function moveCarousel(id, dir) {
+      const c = document.getElementById(id);
+      const slides = c.querySelectorAll('.carousel-slide');
+      const dots   = c.querySelectorAll('.dot');
+      const track  = c.querySelector('.carousel-slides');
+      let current  = Math.round(track.scrollLeft / c.offsetWidth);
+      let next = (current + dir + slides.length) % slides.length;
+      track.scrollTo({ left: next * c.offsetWidth, behavior: 'smooth' });
+      dots[current].classList.remove('active');
+      dots[next].classList.add('active');
+    }
+  </script>
 </body>
 </html>
